@@ -51,9 +51,9 @@ for col, axis in zip(df.columns, axes):
 # 2. A time series plot for each column (hint: use the series “1, 2, 3, ..., 1000” as the
 # horizontal axis; four plots total)
 
-# xaxis = np.arange(1,1001)
-# df.plot(x=xaxis, y=np.array(df['Close_ETF']))
-# plt.show()
+xaxis = np.arange(1,1001)
+plt.plot(xaxis, np.array(df['Close_ETF']))
+plt.show()
 
 y=np.array(df['Close_ETF'])
 
