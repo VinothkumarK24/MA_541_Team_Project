@@ -8,7 +8,7 @@ from scipy.stats import normaltest
 from scipy.stats import chisquare
 from scipy.stats import kstest
 import seaborn as sns
-get_ipython().run_line_magic('matplotlib', 'inline')
+%matplotlib inline
 from itertools import combinations
 import matplotlib.pyplot as plt
 
