@@ -8,11 +8,11 @@ from scipy.stats import normaltest
 from scipy.stats import chisquare
 from scipy.stats import kstest
 import seaborn as sns
-%matplotlib inline
+#%matplotlib inline
 from itertools import combinations
 import matplotlib.pyplot as plt
 
-df = pd.read_excel('/Users/vinodhkumar/Downloads/df.xlsx')
+df = pd.read_excel('finalProjectData.xlsx')
 df.head()
 
 # Finding Mean and Standard deviation for all column
