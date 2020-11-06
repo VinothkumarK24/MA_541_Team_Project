@@ -8,22 +8,33 @@ from scipy.stats import normaltest
 from scipy.stats import chisquare
 from scipy.stats import kstest
 import seaborn as sns
-%matplotlib inline
+#%matplotlib inline
 from itertools import combinations
 import matplotlib.pyplot as plt
 
-df = pd.read_excel('/Users/vinodhkumar/Downloads/df.xlsx')
+
+
+#Read Data
+df = pd.read_excel(' Group project_MA541.xlsx')
 df.head()
 
+#I assume this is part 1 start Vinoth - matt
 # Finding Mean and Standard deviation for all column
-df.describe()
+meanstd = df.describe()
+#whats the point of this line v
 df.isnull().sum()
+# can we get rid of the above? 
+
+import pdb; pdb.set_trace()
 
 # the sample correlations among each pair of the four random variables (columns) of the data.
 corr = df.corr()
 corr_mat = df.corr().abs()
 corr_mat
+#this is part 1 end correct? - matt
+#I think we should output all this data to like a text document or pdf to help read it out
 
+#whats this heatmap thing for i dont think i see it on the rubric
 # Heatmap
 ax = sns.heatmap(
     corr, 
