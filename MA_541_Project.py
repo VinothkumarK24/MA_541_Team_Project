@@ -39,8 +39,9 @@ ax.set_xticklabels(
 
 
 # Part-2
+
 # 1. A histogram for each column (hint: four histograms total)
-fig, axes = plt.subplots(len(df.columns)//3, 3, figsize=(20, 6))
+fig, axes = plt.subplots(len(df.columns)//4, 4, figsize=(20, 6))
 for col, axis in zip(df.columns, axes):
     df.hist(column = col, bins = 100, ax=axis)
 
