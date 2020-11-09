@@ -1,3 +1,4 @@
+
 # Part -1
 import pandas as pd
 import numpy as np
@@ -11,13 +12,17 @@ import seaborn as sns
 %matplotlib inline
 from itertools import combinations
 import matplotlib.pyplot as plt
+import math
 
-df = pd.read_excel('/Users/vinodhkumar/Downloads/df.xlsx')
+
+df = pd.read_excel('df.xlsx')
 df.head()
+
 
 # Finding Mean and Standard deviation for all column
 df.describe()
 df.isnull().sum()
+
 
 # the sample correlations among each pair of the four random variables (columns) of the data.
 corr = df.corr()
@@ -39,6 +44,9 @@ ax.set_xticklabels(
 
 
 # Part-2
+df.columns
+len(df.columns)
+
 
 # 1. A histogram for each column (hint: four histograms total)
 fig, axes = plt.subplots(len(df.columns)//4, 4, figsize=(20, 6))
@@ -49,32 +57,58 @@ for col, axis in zip(df.columns, axes):
 # 2. A time series plot for each column (hint: use the series “1, 2, 3, ..., 1000” as the 
 # horizontal axis; four plots total)
 
+
 xaxis = np.arange(1,1001)
 plt.plot(xaxis, np.array(df['Close_ETF']))
 plt.show()
-y=np.array(df['Close_ETF'])
+
+
+xaxis = np.arange(1,1001)
+plt.plot(xaxis, np.array(df['oil']))
+plt.show()
+
+xaxis = np.arange(1,1001)
+plt.plot(xaxis, np.array(df['gold']))
+plt.show()
+
+
+xaxis = np.arange(1,1001)
+plt.plot(xaxis, np.array(df['JPM']))
+plt.show()
+
 
 
 #3. A time series plot for all four columns (hint: one plot including four “curves” and each “curve” describes one column)
 sns.pairplot(df)
 
+
 #4. Three scatter plots to describe the relationships between the ETF column and the OIL
 # column; between the ETF column and the GOLD column; between the ETF column and the JPM column, respectively
+
+
 
 # Scatter Plot between ETF column and the OIL column
 plt.scatter(df['Close_ETF'], df['oil'])
 plt.xlabel('Close_ETF')
 plt.ylabel('oil')
 
+
+
 # Scatter Plot between ETF column and the GOLD column
 plt.scatter(df['Close_ETF'], df['gold'])
 plt.xlabel('Close_ETF')
 plt.ylabel('gold')
 
+
+
 # Scatter Plot between ETF column and the JPM column
 plt.scatter(df['Close_ETF'], df['JPM'])
 plt.xlabel('Close_ETF')
 plt.ylabel('JPM')
+
+
+
+
 
 # Part-3
 # Gaussian distribution checking for Close_ETF column (univariate observations)
@@ -119,6 +153,7 @@ else:
 	print('Acc to Normal test Sample does not look Gaussian (reject H0)')
 
 
+
 # Gaussian distribution checking for Oil column (univariate observations)
 
 seed(1)
@@ -161,6 +196,8 @@ else:
 	print('Acc to Normal test Sample does not look Gaussian (reject H0)')
 
 
+
+
 # Gaussian distribution checking for Gold column (univariate observations)
 
 seed(1)
@@ -201,6 +238,7 @@ if p > alpha:
 	print('Acc to Normal test Sample looks Gaussian (fail to reject H0)')
 else:
 	print('Acc to Normal test Sample does not look Gaussian (reject H0)')
+
 
 
 # Gaussian distribution checking for Oil column (univariate observations)
@@ -247,8 +285,10 @@ else:
 
 # Part 4: Break your data into small groups and let them discuss the importance of the Central Limit Theorem
 
+
+
 # Consider the ETF column (1000 values) as the population (x), and do the follows. Any software may be used.
-# Mean for ETF Column
+# Calculate the mean 𝜇𝑥 and the standard deviation 𝜎𝑥 of the population.
 mean = df.mean(axis = 0, skipna = True) 
 ETF_mean = mean[0]
 print(f'Mean for ETF Column {ETF_mean}')
@@ -259,11 +299,15 @@ ETF_std = std[0]
 print(f'Standard deviation for ETF Column {ETF_std}')
 
 
+
+
 # # Break the population into 50 groups sequentially and each group includes 20 values.
 seq_sample_means =[]
 for split in np.split(df['Close_ETF'], 50):
     seq_sample_means.append(split.mean())
 print(seq_sample_means)
+
+
 
 
 # Calculate the sample mean (𝑥) of each group. Draw a histogram of all the sample means. Comment on the distribution of these sample means, 
@@ -273,10 +317,22 @@ plt.ylabel('Probability')
 plt.xlabel('Sequntial data split Sample Mean');
 
 
+
+
 #Calculate the mean (𝜇𝑥) and the standard deviation (𝜎𝑥) of the data including these sample means. Make a comparison between 𝜇𝑥 and 𝜇𝑥 , between 𝜎𝑥 and 𝜎𝑥 . Here, 𝑛 is
 # √𝑛 the number of sample means calculated from Item 
 
-# To be done
+import statistics
+s_mean = statistics.mean(seq_sample_means)
+s_std  = statistics.stdev(seq_sample_means)                       
+print(s_mean)
+print(s_std)
+# the standard deviation of the sample-means is equal to the standard deviation of the population divided by the square-root of the sample size √𝑛.
+sigma = ETF_std/math.sqrt(20)
+print(f'sample mean std dev calculated {sigma}')
+
+
+
 
 seq_sample_means_10 =[]
 for split in np.split(df['Close_ETF'], 10):
@@ -286,10 +342,20 @@ plt.hist(seq_sample_means_10, density=True, bins=50)  # `density=False` would ma
 plt.ylabel('Probability')
 plt.xlabel('Sequntial data split Sample Mean');
 
+
 #Calculate the mean (𝜇𝑥) and the standard deviation (𝜎𝑥) of the data including these sample means. Make a comparison between 𝜇𝑥 and 𝜇𝑥 , between 𝜎𝑥 and 𝜎𝑥 . Here, 𝑛 is
 # √𝑛 the number of sample means calculated from Item 
+s_mean = statistics.mean(seq_sample_means_10)
+s_std  = statistics.stdev(seq_sample_means_10)                       
+print(s_mean)
+print(s_std)
 
-# To be done
+# the standard deviation of the sample-means is equal to the standard deviation of the population divided by the square-root of the sample size √𝑛.
+sigma = ETF_std/math.sqrt(100)
+print(f'sample mean standard dev calculated {sigma}')
+
+
+
 
 # Generate 50 simple random samples or groups (with replacement) from the population.
 # The size of each sample is 20, i.e., each group includes 20 values
@@ -301,6 +367,9 @@ for _ in range(50):
     sample_means.append(mean)
 print(sample_means)
 
+
+
+
 # Calculate the sample mean (𝑥) of each group. Draw a histogram of all the sample means. Comment on the distribution of these sample means, i.e., 
 # use the histogram to assess the normality of the data consisting of these sample means.
 
@@ -308,10 +377,18 @@ plt.hist(sample_means, density=True, bins=50)  # `density=False` would make coun
 plt.ylabel('Probability')
 plt.xlabel('Sample Mean');
 
+
+
 #Calculate the mean (𝜇𝑥) and the standard deviation (𝜎𝑥) of the data including these sample means. Make a comparison between 𝜇𝑥 and 𝜇𝑥 , between 𝜎𝑥 and 𝜎𝑥 . Here, 𝑛 is
 # √𝑛 the number of sample means calculated from Item 
+s_mean = statistics.mean(sample_means)
+s_std  = statistics.stdev(sample_means)                       
+print(s_mean)
+print(s_std)
 
-# To be done
+# the standard deviation of the sample-means is equal to the standard deviation of the population divided by the square-root of the sample size √𝑛.
+sigma = ETF_std/math.sqrt(20)
+print(f'sample mean standard dev calculated {sigma}')
 
 
 # Generate 10 simple random samples or groups (with replacement) from the population.
@@ -324,6 +401,8 @@ for _ in range(10):
     sample_means_10.append(mean)
 print(sample_means_10)
 
+
+
 # # Calculate the sample mean (𝑥) of each group. Draw a histogram of all the sample means. Comment on the distribution of these sample means, i.e., 
 # use the histogram to assess the normality of the data consisting of these sample means.
 
@@ -331,10 +410,27 @@ plt.hist(sample_means_10, density=True, bins=50)  # `density=False` would make c
 plt.ylabel('Probability')
 plt.xlabel('Sample Mean');
 
+
+
 #Calculate the mean (𝜇𝑥) and the standard deviation (𝜎𝑥) of the data including these sample means. Make a comparison between 𝜇𝑥 and 𝜇𝑥 , between 𝜎𝑥 and 𝜎𝑥 . Here, 𝑛 is
 # √𝑛 the number of sample means calculated from Item 
 
-# To be done
+s_mean = statistics.mean(sample_means_10)
+s_std  = statistics.stdev(sample_means_10)                       
+print(s_mean)
+print(s_std)
+
+# the standard deviation of the sample-means is equal to the standard deviation of the population divided by the square-root of the sample size √𝑛.
+sigma = ETF_std/math.sqrt(100)
+print(f'sample mean standard dev calculated {sigma}')
+
 
 # In Part 3 of the project, you have figured out the distribution of the population (the entire
 # ETF column). Does this information have any impact on the distribution of the sample mean(s)? Explain your answer.
+
+
+# A standard deviation of the sample-means that is around 1.256 for 100 samples. 
+# A standard deviation of the sample-means that is around 2.81 for 20 samples
+# No matter how many times we repeat the sampling, 
+# the standard deviation will not change, since it only depends on the sample size 
+# it also depends on the population mean, but that remains a constant for a given population
